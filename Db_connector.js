@@ -50,10 +50,11 @@ class DbConnect {
     });
   }
 
-  InsertNewTicket(name, contact, timming) {
+  InsertNewTicket(name, contact, timming, cb) {
     var connection = this.connection;
     var values = [name, contact, timming];
     console.log(values);
+
     var sql =
       "INSERT INTO Tickets (Name, Contact, Timming) VALUES ('" +
       name +
@@ -62,12 +63,15 @@ class DbConnect {
       "','" +
       timming +
       "')";
+
     connection.query(sql, function (err, result) {
-      if (err) throw err;
-      else console.log(result.insertId);
+      var idx = "";
+      var error = "";
+      if (err) err = error;
+      else idx = result.insertId;
+      cb(err, result.insertId);
     });
   }
 }
 
-var obj = new DbConnect();
-obj.InsertNewTicket("Kapil", 8209714523, "2020-12-11 12:00:00");
+module.exports = DbConnect;
