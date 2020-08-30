@@ -68,7 +68,6 @@ class Validator {
 
   validateTimming(timming, allowPastDates = false) {
     var array = timming.split(" ");
-
     if (array.length != 2) {
       return "Enter Timming in YYYY-mm-dd HH:MM:SS Format";
     }

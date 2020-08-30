@@ -17,7 +17,6 @@ app.get("/", (req, res) => {
 
 app.post("/bookTicket", (req, res) => {
   function cb(err, index) {
-    console.log(index == "-1", err);
     if (err && index != "-1") {
       res.status({ status: 200, error: err });
     } else if (index == "-1") {
@@ -116,7 +115,6 @@ app.get("/getUserDetails", (req, res) => {
 
 app.get("/viewTickets", (req, res) => {
   function cb(err, data) {
-    console.log(err);
     if (err == "No Ticket Exists For This Timming!") {
       res
         .status(404)
@@ -130,7 +128,7 @@ app.get("/viewTickets", (req, res) => {
   try {
     var date = req.body.date || req.query.date;
     var time = req.body.time || req.query.time;
-    var timming = date.toString() + " " + time.toString();
+    var timming = date.toString().trim() + " " + time.toString().trim();
     var msg = validator.validateTimming(timming, true);
     if (msg != "ok") {
       res.status(400).send({ status: 400, error: msg });
