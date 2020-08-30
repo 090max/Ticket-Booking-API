@@ -60,19 +60,18 @@ class DbConnect {
   }
 
   scheduleCron() {
-    console.log("Cron inte");
-
+    console.log("Cron Started ...");
     this.task = cron.schedule(
       "*/1 * * * *",
       () => {
-        console.log("Starting the cron ..");
+        // console.log("Starting the cron ..");
         try {
           this.ScheduledTicketsDeletion();
         } catch (err) {
           error = new error(err);
           console.log(error);
         }
-        console.log("Ending cron");
+        // console.log("Ending cron");
       },
       {
         scheduled: false,
@@ -88,10 +87,13 @@ class DbConnect {
       .format("YYYY-MM-DD HH:mm:ss")
       .toString();
     var sql_del = "DELETE FROM Tickets WHERE Timming<='" + timeReq + "'";
-    console.log(sql_del);
+
     connection.query(sql_del, (err, result) => {
       if (err) throw err;
-      else console.log("Deleted ..", result.affectedRows);
+      else
+        result.affectedRows
+          ? console.log("Deleted ..", result.affectedRows)
+          : "";
     });
   }
 
@@ -118,7 +120,6 @@ class DbConnect {
         cb("Seats Buffer For This Timming Is Full", -1);
       } else {
         var values = [name, contact, timming];
-        console.log(values);
 
         var sql =
           "INSERT INTO Tickets (Name, Contact, Timming) VALUES ('" +
@@ -210,6 +211,30 @@ class DbConnect {
           Name: result[0].Name,
           Contact: result[0].Contact,
         };
+        cb("", data);
+      }
+    });
+  }
+
+  GetTicketsForTimming(timming, cb) {
+    var connection = this.connection;
+    var sql_detail = "SELECT * FROM Tickets WHERE Timming='" + timming + "'";
+
+    connection.query(sql_detail, (err, result) => {
+      if (err) cb(err);
+      else if (result.length == 0) {
+        cb("No Ticket Exists For This Timming!");
+      } else {
+        var data = [];
+        result.forEach((res) => {
+          var temp = {
+            TicketId: res.TicketId,
+            Name: res.Name,
+            Contact: res.Contact,
+          };
+          data.push(temp);
+        });
+
         cb("", data);
       }
     });

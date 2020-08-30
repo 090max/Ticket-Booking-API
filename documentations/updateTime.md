@@ -41,11 +41,11 @@ Allows to update ticket timming of a particular ticket id.
 
 ## Error Response
 
-**Condition** : If provided data is invalid, e.g. a name contains integer or date is not in correct format or the maximum quota for the timming is exceeded.
+**Condition** : If provided ticket Id or Timming is invalid.
 
 **Code** : `400 BAD REQUEST`
 
-**Code** : `400 BAD REQUEST` If the Ticket id is valid but is not found.
+**Code** : `404 BAD REQUEST` If the Ticket id is valid but is not found.
 
 **Content example** :
 

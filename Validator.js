@@ -1,4 +1,5 @@
 const moment = require("moment");
+const { min } = require("moment");
 class Validator {
   constructor() {}
 
@@ -19,11 +20,12 @@ class Validator {
 
   validateTime(time) {
     //Format is HH:MM:SS
-    var divs = time.split(":");
+    var divs = time.replace(/['"]+/g, "").split(":");
+
     if (divs.length < 2) return "Provide Time in HH:MM:SS Format";
-    var hour = parseInt(divs[0]);
-    var mins = parseInt(divs[1]);
-    var seconds = divs.length == 3 ? divs[2] : 0;
+    var hour = parseInt(divs[0].toString());
+    var mins = parseInt(divs[1].toString());
+    var seconds = divs.length == 3 ? parseInt(divs[2].toString()) : 0;
     if (
       hour >= 0 &&
       hour < 24 &&
@@ -38,11 +40,11 @@ class Validator {
 
   validateDate(date, timeString) {
     //Format is YYYY-mm-dd
-    var date_arr = date.split("-");
+    var date_arr = date.replace(/['"]+/g, "").split("-");
     if (date_arr.length != 3) {
       return "Incorrect Date Format";
     }
-    console.log(date_arr);
+
     if (
       date_arr[0].length != 4 ||
       date_arr[1].length != 2 ||
@@ -58,7 +60,6 @@ class Validator {
 
     if (!date_given.isValid()) return "Wrong Date Input";
 
-    console.log(date_given, dt_now);
     if (date_given < dt_now) {
       return "No Booking for past date can be made";
     }
@@ -66,13 +67,13 @@ class Validator {
   }
 
   validateTimming(timming) {
-    var array = timming.split(/[ ,]+/);
-    console.log("ss", array);
+    var array = timming.split(" ");
+
     if (array.length != 2) {
       return "Enter Timming in YYYY-mm-dd HH:MM:SS Format";
     }
-    var date = array[0];
-    var time = array[1];
+    var date = array[0].toString();
+    var time = array[1].toString();
     var ans1 = this.validateTime(time);
     if (ans1 != "ok") return ans1;
     var ans2 = this.validateDate(date, timming);
@@ -85,7 +86,6 @@ class Validator {
     if (!ans1) return "Please recheck name provided";
     var ans2 = this.validatePhoneNumber(phone.toString());
     if (!ans2) return "Please recheck contact number provided";
-    // console.log(timming);
     return this.validateTimming(timming.toString());
   }
 
@@ -96,14 +96,3 @@ class Validator {
   }
 }
 module.exports = Validator;
-
-// obj = new Validator();
-// var n = "8209714523";
-// if (obj.validatePhoneNumber(n)) {
-//   console.log("ok");
-// } else {
-//   console.log("NOK");
-// }
-
-// var d = "2020-12-1312:99:34";
-// console.log(obj.validateTimming(d));

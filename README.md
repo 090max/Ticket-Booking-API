@@ -1,4 +1,4 @@
-# RESTAPIDocs Examples
+# Ticket Book REST API
 
 This is a REST API Implementation for Ticket booking and its management.
 
@@ -8,39 +8,29 @@ The server file is `server.js` file.
 
 `Db_connector.js` contains a class that authenticates and manages MYSQL database transactions and runs cront task. 
 
-These examples were taken from projects mainly using [Django Rest
-Framework](https://github.com/tomchristie/django-rest-framework) and so the
-JSON responses are often similar to the way in which DRF makes responses.
+## Install
+    git clone "https://github.com/090max/Ticket-Booking-API"
+    cd Ticket-Booking-API
+    npm install
+    node server.js
 
-Where full URLs are provided in responses they will be rendered as if service
-is running on 'http://testserver/'.
+# REST API
 
-## Open Endpoints
+The REST API is described below.
 
-Open endpoints require no Authentication.
+### Information Retreival Related
 
-* [Login](login.md) : `POST /api/login/`
+Each endpoint displays related information.
 
-## Endpoints that require Authentication
+* [Get User Details](documentations/getUserDetails.md) : `GET /getUserDetails/`
+* [View Tickets](documentations/viewTickets.md) : `GET /viewTickets/`
 
-Closed endpoints require a valid Token to be included in the header of the
-request. A Token can be acquired from the Login view above.
+### Information Manipulation Related
 
-### Current User related
+Each endpoint manipulates or inserts the data.
 
-Each endpoint manipulates or displays information related to the User whose
-Token is provided with the request:
+* [Book Tickets](documentations/bookTickets.md) : `POST /bookTickets/`
+* [Delete Ticket](documentations/deleteTicket.md) : `DELETE /deleteTicket/`
+* [Update Time](documentations/updateTime.md) : `PUT /updateTime/:id/`
 
-* [Show info](user/get.md) : `GET /api/user/`
-* [Update info](user/put.md) : `PUT /api/user/`
 
-### Account related
-
-Endpoints for viewing and manipulating the Accounts that the Authenticated User
-has permissions to access.
-
-* [Show Accessible Accounts](accounts/get.md) : `GET /api/accounts/`
-* [Create Account](accounts/post.md) : `POST /api/accounts/`
-* [Show An Account](accounts/pk/get.md) : `GET /api/accounts/:pk/`
-* [Update An Account](accounts/pk/put.md) : `PUT /api/accounts/:pk/`
-* [Delete An Account](accounts/pk/delete.md) : `DELETE /api/accounts/:pk/`

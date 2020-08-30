@@ -46,7 +46,7 @@ To Delete a ticket with particular TicketId.
 
 **Code** : `400 BAD REQUEST`
 
-**Code** : `400 BAD REQUEST` If the Ticket id is valid but is not found.
+**Code** : `404 BAD REQUEST` If the Ticket id is valid but is not found.
 
 **Content example** :
 

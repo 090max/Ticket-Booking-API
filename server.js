@@ -115,8 +115,31 @@ app.get("/getUserDetails", (req, res) => {
 });
 
 app.get("/viewTickets", (req, res) => {
-  var time = req.body.time || req.query.time;
-  console.log(time);
+  function cb(err, data) {
+    console.log(err);
+    if (err == "No Ticket Exists For This Timming!") {
+      res
+        .status(404)
+        .send({ status: 404, error: "No Ticket Exists For This Timming!" });
+    } else if (err) {
+      res.status(500).send({ status: 500, error: err });
+    } else {
+      res.send({ status: 200, data: data });
+    }
+  }
+  try {
+    var date = req.body.date || req.query.date;
+    var time = req.body.time || req.query.time;
+    var timming = date.toString() + " " + time.toString();
+    var msg = validator.validateTimming(timming);
+    if (msg != "ok") {
+      res.status(400).send({ status: 400, error: msg });
+      return;
+    }
+    DbConnect_obj.GetTicketsForTimming(timming.toString(), cb);
+  } catch (err) {
+    res.status(400).send({ status: 400, error: "Bad Request" });
+  }
 });
 
 app.listen(port, (req, res) => {

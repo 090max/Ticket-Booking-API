@@ -48,6 +48,9 @@ Get the details of the user via the TicketId.
 
 **Code** : `400 BAD REQUEST`
 
+**Code** : `404 BAD REQUEST` If the Ticket id is valid but is not found.
+
+
 **Content example** :
 
 ```json
