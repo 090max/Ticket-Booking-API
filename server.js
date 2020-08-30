@@ -11,9 +11,29 @@ app.get("/i", (req, res) => {
   function cb(err, index) {
     res.send({ Index: index, error: err });
   }
-  DbConnect_obj.InsertNewTicket("Kapil", 8209714523, "2020-12-11 12:00:00", cb);
+  DbConnect_obj.InsertNewTicket("Kapil", 8209714523, "2020-05-12 13:00:00", cb);
 });
 
+app.get("/u", (req, res) => {
+  function cb(err) {
+    res.send({ error: err });
+  }
+  DbConnect_obj.UpdateTicketTime(3, "2020-12-11 13:00:00", cb);
+});
+
+app.get("/d", (req, res) => {
+  function cb(err) {
+    res.send({ error: err });
+  }
+  DbConnect_obj.DeleteTicketId(1, cb);
+});
+
+app.get("/id", (req, res) => {
+  function cb(err, data) {
+    res.send({ error: err, data: data });
+  }
+  DbConnect_obj.GetUserDetails(3, cb);
+});
 app.listen(port, (req, res) => {
   console.log("Server running on port ", port);
 });
