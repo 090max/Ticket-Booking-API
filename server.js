@@ -17,12 +17,16 @@ app.get("/", (req, res) => {
 
 app.post("/bookTicket", (req, res) => {
   function cb(err, index) {
-    if (err) {
+    console.log(index == "-1", err);
+    if (err && index != "-1") {
       res.status({ status: 200, error: err });
-    }
-    res
-      .status(201)
-      .send({ status: 201, TicketId: index, message: "Ticket Booked" });
+    } else if (index == "-1") {
+      res.status(403).send({ status: 403, error: err });
+    } else
+      res
+        .status(201)
+        .send({ status: 201, TicketId: index, message: "Ticket Booked" });
+    return;
   }
   try {
     var name = req.body.name;
@@ -46,7 +50,7 @@ app.put("/update", (req, res) => {
     } else if (err == "Updated Successfully !!") {
       res.status(200).send({ status: 200, message: err });
     } else {
-      res.status(400).send({ status: 400, error: err });
+      res.status(500).send({ status: 500, error: err });
     }
     return;
   }
@@ -64,19 +68,57 @@ app.put("/update", (req, res) => {
   }
 });
 
-app.get("/d", (req, res) => {
+app.delete("/deleteTicket", (req, res) => {
   function cb(err) {
-    res.send({ error: err });
+    if (err == "No such TicketId Found!!") {
+      res.status(404).send({ status: 404, error: "No such TicketId Found!!" });
+    } else if (err == "Deleted Successfully !!") {
+      res.status(200).send({ status: 200, message: err });
+    } else {
+      res.status(500).send({ status: 500, error: err });
+    }
   }
-  DbConnect_obj.DeleteTicketId(1, cb);
+  try {
+    var TicketId = req.body.ticketId;
+    var mssg = validator.validateTicketId(TicketId);
+    if (!mssg) {
+      res.status(400).send({ status: 400, error: "Invalid Ticket Id" });
+      return;
+    }
+    DbConnect_obj.DeleteTicketId(TicketId, cb);
+  } catch (err) {
+    res.status(400).send({ status: 400, error: "Bad Request" });
+  }
 });
 
-app.get("/id", (req, res) => {
+app.get("/getUserDetails", (req, res) => {
   function cb(err, data) {
-    res.send({ error: err, data: data });
+    if (err == "No Such TicketId Exists !") {
+      res.status(404).send({ status: 404, error: "No such TicketId Found!!" });
+    } else if (err) {
+      res.status(500).send({ status: 500, error: err });
+    } else {
+      res.send({ status: 200, data: data });
+    }
   }
-  DbConnect_obj.GetUserDetails(3, cb);
+  try {
+    var TicketId = req.query.ticketId || req.body.ticketId;
+    var mssg = validator.validateTicketId(TicketId);
+    if (!mssg) {
+      res.status(400).send({ status: 400, error: "Invalid Ticket Id" });
+      return;
+    }
+    DbConnect_obj.GetUserDetails(TicketId, cb);
+  } catch (err) {
+    res.status(400).send({ status: 400, error: "Bad Request" });
+  }
 });
+
+app.get("/viewTickets", (req, res) => {
+  var time = req.body.time || req.query.time;
+  console.log(time);
+});
+
 app.listen(port, (req, res) => {
   console.log("Server running on port ", port);
 });

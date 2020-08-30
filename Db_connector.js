@@ -54,8 +54,8 @@ class DbConnect {
       this.useDatabase,
     ]).then((values) => {
       console.log(values);
-      // this.scheduleCron();
-      // this.task.start();
+      this.scheduleCron();
+      this.task.start();
     });
   }
 
@@ -115,7 +115,7 @@ class DbConnect {
 
     function insertIfOk(ok) {
       if (!ok) {
-        cb("20 Values Exists!", -1);
+        cb("Seats Buffer For This Timming Is Full", -1);
       } else {
         var values = [name, contact, timming];
         console.log(values);
@@ -206,8 +206,11 @@ class DbConnect {
       else if (result.length == 0) {
         cb("No Such TicketId Exists !");
       } else {
-        console.log(result);
-        cb("", result[0]);
+        var data = {
+          Name: result[0].Name,
+          Contact: result[0].Contact,
+        };
+        cb("", data);
       }
     });
   }
