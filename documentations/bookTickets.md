@@ -10,9 +10,9 @@ Allows to book a ticket
 
 ```json
 {
-    "name":[string input],
-    "contact":[10 Digit Number],
-    "timming":[YYYY-mm-dd HH:MM:SS]
+    "name":"[string input]",
+    "contact":"[10 Digit Number]",
+    "timming":"[YYYY-mm-dd HH:MM:SS]"
 }
 ```
 
