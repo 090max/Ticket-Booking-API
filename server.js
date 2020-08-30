@@ -43,7 +43,7 @@ app.post("/bookTicket", (req, res) => {
   }
 });
 
-app.put("/update", (req, res) => {
+app.put("/updateTime/:id", (req, res) => {
   function cb(err) {
     if (err == "No such TicketId Found!!") {
       res.status(404).send({ status: 404, error: "No such TicketId Found!!" });
@@ -55,7 +55,7 @@ app.put("/update", (req, res) => {
     return;
   }
   try {
-    var TicketId = req.body.ticketId;
+    var TicketId = req.params.id;
     var newTimming = req.body.newTimming;
     var mssg = validator.validateUpdateReq(TicketId, newTimming);
     if (mssg != "ok") {

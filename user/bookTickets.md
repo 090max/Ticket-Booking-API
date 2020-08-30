@@ -1,6 +1,6 @@
-# Update Current User
+# Book Tickets
 
-Allow the Authenticated User to update their details.
+Allows to book a ticket
 
 **URL** : `/bookTicket`
 
@@ -47,7 +47,7 @@ Partial data is Not allowed.
 
 ## Error Response
 
-**Condition** : If provided data is invalid, e.g. a name contains integer or date is not in correct format.
+**Condition** : If provided data is invalid, e.g. a name contains integer or date is not in correct format or the maximum quota for the timming is exceeded.
 
 **Code** : `400 BAD REQUEST`
 
@@ -97,8 +97,14 @@ Partial data is Not allowed.
 }
 ```
 
+```json
+{   "status": 200, 
+    "error": "Seats Buffer For This Timming Is Ful" 
+}
+```
 
 ## Notes
 
 * A user will be issued a TicketId for each booking, which would be later used to identify the user.
+* No more than 20 seats be allocated for a particular timming.
 * 500 status code will be thrown if an unknown error occurs.
