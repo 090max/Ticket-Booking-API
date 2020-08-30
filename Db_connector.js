@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 const cron = require("node-cron");
 var moment = require("moment");
+
 class DbConnect {
   constructor() {
     this.mysqCredentials = {
@@ -47,29 +48,30 @@ class DbConnect {
       });
     });
 
-    // this.creatDatabase();
-    // this.createTableTickets();
-    // this.useDatabase();
     Promise.all([
       this.creatDatabase,
       this.createTableTickets,
       this.useDatabase,
     ]).then((values) => {
       console.log(values);
-      this.scheduleCron();
-      this.task.start();
+      // this.scheduleCron();
+      // this.task.start();
     });
-
-    // this.task.start();
   }
 
   scheduleCron() {
     console.log("Cron inte");
+
     this.task = cron.schedule(
       "*/1 * * * *",
       () => {
         console.log("Starting the cron ..");
-        this.ScheduledTicketsDeletion();
+        try {
+          this.ScheduledTicketsDeletion();
+        } catch (err) {
+          error = new error(err);
+          console.log(error);
+        }
         console.log("Ending cron");
       },
       {
@@ -89,7 +91,7 @@ class DbConnect {
     console.log(sql_del);
     connection.query(sql_del, (err, result) => {
       if (err) throw err;
-      else console.log(result);
+      else console.log("Deleted ..", result.affectedRows);
     });
   }
 
