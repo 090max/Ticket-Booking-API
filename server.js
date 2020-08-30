@@ -131,7 +131,7 @@ app.get("/viewTickets", (req, res) => {
     var date = req.body.date || req.query.date;
     var time = req.body.time || req.query.time;
     var timming = date.toString() + " " + time.toString();
-    var msg = validator.validateTimming(timming);
+    var msg = validator.validateTimming(timming, true);
     if (msg != "ok") {
       res.status(400).send({ status: 400, error: msg });
       return;

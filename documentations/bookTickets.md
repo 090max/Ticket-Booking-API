@@ -50,6 +50,7 @@ Partial data is Not allowed.
 **Condition** : If provided data is invalid, e.g. a name contains integer or date is not in correct format or the maximum quota for the timming is exceeded.
 
 **Code** : `400 BAD REQUEST`
+**Code** : `403 FORBIDDEN` , This happens when the seat buffer for a timming is full.
 
 **Content example** :
 
@@ -98,7 +99,7 @@ Partial data is Not allowed.
 ```
 
 ```json
-{   "status": 200, 
+{   "status": 403, 
     "error": "Seats Buffer For This Timming Is Ful" 
 }
 ```

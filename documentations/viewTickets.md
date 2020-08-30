@@ -62,7 +62,7 @@ Parameters can be sent via query or body.
 **Condition** : If provided data is invalid, e.g. a name contains integer or date is not in correct format or the maximum quota for the timming is exceeded.
 
 **Code** : `400 BAD REQUEST`
-**Code** : `404 BAD REQUEST` ,If date and time are valid but not found in the database.
+**Code** : `404 RESOURCE NOT FOUND` ,If date and time are valid but not found in the database.
 
 **Content example** :
 

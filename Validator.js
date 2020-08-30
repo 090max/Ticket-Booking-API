@@ -38,7 +38,7 @@ class Validator {
     return "Incorrect Time Values";
   }
 
-  validateDate(date, timeString) {
+  validateDate(date, timeString, allowPastDates) {
     //Format is YYYY-mm-dd
     var date_arr = date.replace(/['"]+/g, "").split("-");
     if (date_arr.length != 3) {
@@ -60,13 +60,13 @@ class Validator {
 
     if (!date_given.isValid()) return "Wrong Date Input";
 
-    if (date_given < dt_now) {
+    if (date_given < dt_now && !allowPastDates) {
       return "No Booking for past date can be made";
     }
     return "ok";
   }
 
-  validateTimming(timming) {
+  validateTimming(timming, allowPastDates = false) {
     var array = timming.split(" ");
 
     if (array.length != 2) {
@@ -76,7 +76,7 @@ class Validator {
     var time = array[1].toString();
     var ans1 = this.validateTime(time);
     if (ans1 != "ok") return ans1;
-    var ans2 = this.validateDate(date, timming);
+    var ans2 = this.validateDate(date, timming, allowPastDates);
     if (ans2 != "ok") return ans2;
     return "ok";
   }
