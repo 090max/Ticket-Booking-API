@@ -31,7 +31,8 @@ npm i
 ```
 4. Install Mysql on your Machine.
 5. Go to Db_connector.js file and change username and password to your MYSQL username and password 
-6. Run the Server.`
+6. A `TicketManager` Database and a table inside it `Tickets` would automatically be created. 
+7. Run the Server.`
 ```JS
 node server.js
 ```
