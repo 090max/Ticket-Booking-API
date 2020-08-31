@@ -28,36 +28,31 @@ class DbConnect {
         if (err) res("Database already exists..");
         else res("Database created TicketManager");
       });
-    });
-
-    this.createTableTickets = new Promise((res, rej) => {
-      var connection = this.connection;
-      var sql =
-        "CREATE TABLE Tickets(TicketId INT AUTO_INCREMENT PRIMARY KEY,Name VARCHAR(500),Contact VARCHAR(256),Timming TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
-      connection.query(sql, function (err, result) {
-        if (err) res("Table Tickets already exists ..");
-        else res("Table Created Tickets");
+    }).then((val) => {
+      console.log(val);
+      this.useDatabase = new Promise((res, rej) => {
+        this.connection.end();
+        this.connection = mysql.createConnection(this.mysqCredentialsDB);
+        this.connection.connect(function (err) {
+          if (err) res(err);
+          res("Database With TicketManager Connected!");
+        });
+      }).then((val) => {
+        console.log(val);
+        this.createTableTickets = new Promise((res, rej) => {
+          var connection = this.connection;
+          var sql =
+            "CREATE TABLE Tickets(TicketId INT AUTO_INCREMENT PRIMARY KEY,Name VARCHAR(500),Contact VARCHAR(256),Timming TIMESTAMP DEFAULT CURRENT_TIMESTAMP);";
+          connection.query(sql, function (err, result) {
+            if (err) res("Table Tickets already exists ..");
+            else res("Table Created Tickets");
+          });
+        }).then((val) => {
+          console.log(val);
+          this.scheduleCron();
+          this.task.start();
+        });
       });
-    });
-
-    this.useDatabase = new Promise((res, rej) => {
-      this.connection.end();
-      this.connection = mysql.createConnection(this.mysqCredentialsDB);
-      this.connection.connect(function (err) {
-        if (err) res(err);
-        res("Database With TicketManager Connected!");
-      });
-    });
-
-    //Here database , table and database switching happen ...
-    Promise.all([
-      this.creatDatabase,
-      this.createTableTickets,
-      this.useDatabase,
-    ]).then((values) => {
-      console.log(values);
-      this.scheduleCron();
-      this.task.start();
     });
   }
 
