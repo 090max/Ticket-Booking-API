@@ -8,6 +8,10 @@ Get the details of the user via the TicketId.
 
 **Data constraints**
 
+```
+  /getUserDetails?ticketId=<INTEGER>
+```
+
 ```json
 {
     "ticketId":"[Integer]"
@@ -16,6 +20,11 @@ Get the details of the user via the TicketId.
 
 **Data examples**
 
+```
+http://localhost:3000/getUserDetails?ticketId=29 
+```
+
+OR
 
 ```json
 {
@@ -30,7 +39,7 @@ Get the details of the user via the TicketId.
 
 **Code** : `200 OK`
 
-**Content example** : Response will reflect the corresponding TicketId of the booking with a confirmation message of ticket being booked.
+**Content example** : Response will reflect the corresponding Ticket Information such as name and contact number.
 
 ```json
 {

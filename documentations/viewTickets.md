@@ -11,7 +11,7 @@ Parameters can be sent via query or body.
 
 **URL** : viewTickets?date=<YYYY-mm-dd>&time=<HH:MM:SS>
 
-**BODY** : 
+**BODY** : This can be alternatively used.
 ```json
 {
     "date":"[YYYY-mm-dd]"
@@ -19,7 +19,15 @@ Parameters can be sent via query or body.
 }
 ```
 
-**Data examples**:http://localhost:3000/viewTickets?date=2020-12-11&time=13:10:10
+**Data examples**:
+URL : http://localhost:3000/viewTickets?date=2020-12-11&time=13:10:10
+BODY :
+```json
+{
+    "date":"2020-12-11"
+    "time":"13:10:10"
+}
+```
 
 ## Success Responses
 

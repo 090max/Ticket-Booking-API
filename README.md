@@ -8,17 +8,33 @@ The server file is `server.js` file.
 
 `Db_connector.js` contains a class that authenticates and manages MYSQL database transactions and runs cront task. 
 
-## Install
-    git clone "https://github.com/090max/Ticket-Booking-API"
-    cd Ticket-Booking-API
-    npm install
-    node server.js
+## TECH STACK
+    NODE.JS
+    MYSQL
+
+
+### Installation
+
+1. To Run the application for development ,Clone the repo
+```sh
+https://github.com/090max/Ticket-Booking-API
+```
+2. Install NPM packages.
+```sh
+npm i
+```
+3. Install Mysql on your Machine.
+4. Go to Db_connector.js file and change username and password to your MYSQL username and password 
+5. Run the Server.`
+```JS
+node server.js
+```
 
 # REST API
 
 The REST API is described below.
 
-### Information Retreival Related
+### Information Retrieval Related
 
 Each endpoint displays related information.
 

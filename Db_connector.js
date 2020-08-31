@@ -3,6 +3,7 @@ const cron = require("node-cron");
 var moment = require("moment");
 
 class DbConnect {
+  //A class that connects to mysql and processes queries ..
   constructor() {
     this.mysqCredentials = {
       host: "localhost",
@@ -48,6 +49,7 @@ class DbConnect {
       });
     });
 
+    //Here database , table and database switching happen ...
     Promise.all([
       this.creatDatabase,
       this.createTableTickets,
@@ -60,6 +62,7 @@ class DbConnect {
   }
 
   scheduleCron() {
+    //A cron task that deletes the tickets with currentTime-TicketTime>=8 hours
     console.log("Cron Started ...");
     this.task = cron.schedule(
       "*/1 * * * *",

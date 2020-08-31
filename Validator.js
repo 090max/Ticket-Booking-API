@@ -1,6 +1,7 @@
 const moment = require("moment");
 const { min } = require("moment");
 class Validator {
+  //A classs that helps in validation of data ..
   constructor() {}
 
   validatePhoneNumber(number) {
